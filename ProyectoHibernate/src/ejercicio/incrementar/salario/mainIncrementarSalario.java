@@ -3,6 +3,8 @@
  */
 package ejercicio.incrementar.salario;
 
+import java.math.BigDecimal;
+
 /**
  * @author Alberto Vivas
  *
@@ -17,7 +19,9 @@ public class mainIncrementarSalario {
 		IncrementarSalarios is =new IncrementarSalarios();
 		try{
 		is.mostrarDepVentas();
-		is.incrementarSalario20();
+		//is.incrementarSalario20();
+		BigDecimal d = new BigDecimal(0);
+		is.incrementarSalarioXporCiento(d);
 		is.mostrarDepVentas();
 		}catch (Exception e) {
 			e.printStackTrace();
