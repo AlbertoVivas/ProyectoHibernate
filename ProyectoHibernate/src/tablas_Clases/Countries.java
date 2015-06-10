@@ -62,5 +62,13 @@ public class Countries implements java.io.Serializable {
 	public void setLocationses(Set locationses) {
 		this.locationses = locationses;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "       "+ countryName;
+	}
 
 }

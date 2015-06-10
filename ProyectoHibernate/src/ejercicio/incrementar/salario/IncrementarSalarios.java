@@ -84,12 +84,9 @@ public class IncrementarSalarios {
 				employees=it.next();
 				n_salary= employees.getSalary().multiply(inc);
 				employees.setSalary(n_salary);
-				session.saveOrUpdate(employees);
 			}
-			
 			transaction.commit();
 			respuesta = true;
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			transaction.rollback();
