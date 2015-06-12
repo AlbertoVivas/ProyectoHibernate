@@ -14,13 +14,21 @@ import org.hibernate.Session;
 public class SuperClaseDAO {
 
 	
-	private static Session session;
+	private  Session session;
 
-	public static Session getSession() {
+	public  Session getSession() {
 		return session;
 	}
 
-	public static void setSession(Session session) {
-		SuperClaseDAO.session = session;
+	public  void setSession(Session session) {
+		this.session = session;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

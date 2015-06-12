@@ -15,7 +15,7 @@ import org.hibernate.cfg.Configuration;
  */
 public class SessionManager {
 
-	private static Session session;
+	private Session session;
 	private static Configuration configuration;
 	private static StandardServiceRegistryBuilder builder;
 	private static SessionFactory factory;
@@ -39,6 +39,7 @@ public class SessionManager {
 	}
 	
 	
+	@SuppressWarnings("static-access")
 	public static void closeAll(){
 		try{
 			//sessionManager.session.close();

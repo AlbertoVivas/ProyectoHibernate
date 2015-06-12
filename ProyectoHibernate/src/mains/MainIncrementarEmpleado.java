@@ -4,14 +4,15 @@
 package mains;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Set;
+import java.util.Iterator;
+import java.util.List;
 
 import servicios.EmployeesServices;
+import servicios.JobsServices;
 import session.SessionManager;
-import tablas_Clases.Departments;
 import tablas_Clases.Employees;
 import tablas_Clases.Jobs;
+
 
 /**
  * @author Alberto Vivas
@@ -23,11 +24,12 @@ public class MainIncrementarEmpleado {
 	
 	public static void main(String[] args) {
 		EmployeesServices es = new EmployeesServices();
-		BigDecimal d = new BigDecimal(20);
+		BigDecimal d = new BigDecimal(0);
 		//es.incrementarSalario(d);
 		try{
-		es.mostrarEmpleados();
+		//es.mostrarEmpleados();
 		//es.incrementarSalario(d);
+		//es.mostrarEmpleados();
 		/*Jobs jobs = new Jobs("ZGZ_mal", "Malavarista");
 		Date hireDate = new Date(2015, 6, 11);
 		String email = "malavarista@gmail.com";
@@ -44,10 +46,22 @@ public class MainIncrementarEmpleado {
 		BigDecimal commissionPct= new BigDecimal(5);
 		Employees employees = null;
 		Employees em = new Employees(employeeId, jobs, departments, employees, firstName, lastName, email, phoneNumber, hireDate, salary, commissionPct, employeeses, departmentses, jobHistories);
-		es.insertarempleado(em);
-		es.mostrarEmpleados();*/
+		es.insertarempleado(em);*/
 		
-		System.out.println("\n mostrar empleado\n"+es.mostrarempleado(105));
+		
+		System.out.println("\n mostrar empleado\n"+es.obtenerempleado(105));
+		JobsServices js = new JobsServices();
+		Jobs j = js.mostrarJobs("IT_PROG");
+		System.out.println("\n mostrat job\n"+j.tomiString());
+		
+		List<Employees> ale = es.obtenerEmpleadosMejorPagados();
+		Iterator<Employees> i = ale.iterator();
+		System.out.println("\n Lista de empleados mejor pagados\n");
+		while(i.hasNext()){
+			System.out.println(i.next().imprime());
+		}
+		
+		
 		}
 		catch(Exception e) {
 			e.printStackTrace();

@@ -84,4 +84,28 @@ public class Jobs implements java.io.Serializable {
 		this.jobHistories = jobHistories;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString(){
+		String s_dev="";
+		s_dev+="Job ID:"+jobId+"\n";
+		s_dev+="Job Title: "+jobTitle+"\n";
+		s_dev+="------------------------------\n";
+		return s_dev;
+	}
+	
+	
+	public String tomiString() {
+		String s_dev="";
+		s_dev+="------------------------------\n";
+		s_dev+="  Job ID:   "+jobId+"\n";
+		s_dev+=" Job Title: "+jobTitle+"\n";
+		s_dev+="Min Salary: "+minSalary+"\n";
+		s_dev+="Max Salary: "+maxSalary+"\n";
+		s_dev+="------------------------------\n";
+		return s_dev;
+	}
+
 }

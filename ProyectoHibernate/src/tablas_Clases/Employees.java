@@ -180,4 +180,17 @@ public class Employees implements java.io.Serializable {
 		// TODO Auto-generated method stub
 		return firstName+" "+lastName+" "+salary.intValue();
 	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		Employees e = (Employees)obj;
+		return this.employeeId==e.getEmployeeId() && this.firstName.equals(e.getFirstName())&& this.lastName.equals(e.getLastName());
+	}
+	
+	public String imprime(){
+		return this.firstName+" "+this.lastName+" "+this.departments.getDepartmentId()+" "+this.salary;
+	}
 }

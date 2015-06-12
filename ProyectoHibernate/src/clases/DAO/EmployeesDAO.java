@@ -5,19 +5,16 @@ package clases.DAO;
 
 import java.util.Iterator;
 import java.util.List;
-
-import org.hibernate.Session;
-
 import sup.clase.DAO.SuperClaseDAO;
 import tablas_Clases.Employees;
-import interfaces.InterfaceDAO;
+import interfaces.InterfaceEmployeesDAO;
 
 /**
  * @author Alberto Vivas
  *
  * 
  */
-public class EmployeesDAO extends SuperClaseDAO implements InterfaceDAO{
+public class EmployeesDAO extends SuperClaseDAO implements InterfaceEmployeesDAO{
 	
 	
 
@@ -27,7 +24,8 @@ public class EmployeesDAO extends SuperClaseDAO implements InterfaceDAO{
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Employees> obtenerEmpleados(){	
-		return getSession().createSQLQuery("SELECT * FROM EMPLOYEES").addEntity(Employees.class).list();	}
+		return getSession().createSQLQuery("SELECT * FROM EMPLOYEES").addEntity(Employees.class).list();	
+		}
 
 	/* (non-Javadoc)
 	 * @see interfaces.InterfaceDAO#create(java.lang.Object)
@@ -49,9 +47,10 @@ public class EmployeesDAO extends SuperClaseDAO implements InterfaceDAO{
 	 * @see interfaces.InterfaceDAO#Read(java.lang.Object)
 	 */
 	@Override
-	public Object Read(int arg) {
+	public Object Read(Object arg) {
+		int s = (Integer)arg;
 		@SuppressWarnings("unchecked")
-		List<Employees> le =getSession().createSQLQuery("Select * from employees where EMPLOYEE_ID ="+arg).addEntity(Employees.class).list();
+		List<Employees> le =getSession().createSQLQuery("Select * from employees where EMPLOYEE_ID ="+s).addEntity(Employees.class).list();
 		Iterator<Employees> ie = le.iterator();
 		return ie.next();
 	}
@@ -73,6 +72,4 @@ public class EmployeesDAO extends SuperClaseDAO implements InterfaceDAO{
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-
 }
