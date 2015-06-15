@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import interfaces.InterfaceJobsDAO;
-import sup.clase.DAO.SuperClaseDAO;
+import sup.clases.SuperClaseDAO;
 import tablas_Clases.Jobs;
 
 /**

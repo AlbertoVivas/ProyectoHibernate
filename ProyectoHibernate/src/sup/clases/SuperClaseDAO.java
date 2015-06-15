@@ -1,7 +1,9 @@
 /**
  * 
  */
-package sup.clase.DAO;
+package sup.clases;
+
+import interfaces.InterfaceDAO;
 
 import org.hibernate.Session;
 
@@ -11,8 +13,7 @@ import org.hibernate.Session;
  *
  * 
  */
-public class SuperClaseDAO {
-
+public class SuperClaseDAO{
 	
 	private  Session session;
 
@@ -23,12 +24,4 @@ public class SuperClaseDAO {
 	public  void setSession(Session session) {
 		this.session = session;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }

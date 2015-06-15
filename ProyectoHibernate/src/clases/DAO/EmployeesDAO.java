@@ -5,16 +5,16 @@ package clases.DAO;
 
 import java.util.Iterator;
 import java.util.List;
-import sup.clase.DAO.SuperClaseDAO;
+import sup.clases.SuperClaseDAO;
 import tablas_Clases.Employees;
-import interfaces.InterfaceEmployeesDAO;
+import interfaces.InterfaceDAO;
 
 /**
  * @author Alberto Vivas
  *
  * 
  */
-public class EmployeesDAO extends SuperClaseDAO implements InterfaceEmployeesDAO{
+public class EmployeesDAO extends SuperClaseDAO implements InterfaceDAO{
 	
 	
 
@@ -26,6 +26,12 @@ public class EmployeesDAO extends SuperClaseDAO implements InterfaceEmployeesDAO
 	public List<Employees> obtenerEmpleados(){	
 		return getSession().createSQLQuery("SELECT * FROM EMPLOYEES").addEntity(Employees.class).list();	
 		}
+	
+	@SuppressWarnings("unchecked")
+	public List<Employees> obtenerEmpleadosPorDepartamento(Object arg){
+		int s = (Integer)arg;
+		return getSession().createSQLQuery("SELECT * FROM EMPLOYEES where DEPARTMENT_ID="+s).addEntity(Employees.class).list();
+	}
 
 	/* (non-Javadoc)
 	 * @see interfaces.InterfaceDAO#create(java.lang.Object)
@@ -36,6 +42,7 @@ public class EmployeesDAO extends SuperClaseDAO implements InterfaceEmployeesDAO
 		boolean b_dev = false;
 		try{
 			getSession().saveOrUpdate((Employees)arg);
+			b_dev = true;
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{

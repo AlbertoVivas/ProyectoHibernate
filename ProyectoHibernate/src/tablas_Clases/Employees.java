@@ -191,6 +191,15 @@ public class Employees implements java.io.Serializable {
 	}
 	
 	public String imprime(){
-		return this.firstName+" "+this.lastName+" "+this.departments.getDepartmentId()+" "+this.salary;
+		String srt_dev="";
+		srt_dev+=this.firstName+" ";
+		srt_dev+=this.lastName+" ";
+		for (int i = 0; i < 22-(this.firstName.length()+this.lastName.length()+2); i++) {
+			srt_dev+=" ";
+		}
+		srt_dev+=this.departments.getDepartmentId()+"        "+this.salary;
+		
+		return srt_dev;
+		//return this.firstName+" "+this.lastName+" "+this.departments.getDepartmentId()+" "+this.salary;
 	}
 }

@@ -5,16 +5,10 @@ package servicios;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-
 import org.hibernate.Transaction;
-
 import org.hibernate.Session;
-
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 import session.SessionManager;
 import tablas_Clases.Employees;
 
@@ -118,6 +112,7 @@ public class EmployeesServices {
 			return b_dev;
 		}
 	}
+	
 	@SuppressWarnings("finally")
 	public Employees obtenerempleado(int emp_id){
 		Employees b_dev = null;
@@ -217,11 +212,9 @@ public class EmployeesServices {
 						al70.add(e);
 						break;
 					case 80:
-						System.out.println("entre en 80");
 						al80.add(e);
 						break;
 					case 90:
-						System.out.println("entre en 90");
 						al90.add(e);
 						break;
 					case 100:
@@ -237,8 +230,6 @@ public class EmployeesServices {
 					}
 				}
 		}
-		
-		
 		lemp.add(obtenerEmpleadoMayor(al10));
 		lemp.add(obtenerEmpleadoMayor(al20));
 		lemp.add(obtenerEmpleadoMayor(al30));
@@ -250,11 +241,6 @@ public class EmployeesServices {
 		lemp.add(obtenerEmpleadoMayor(al90));
 		lemp.add(obtenerEmpleadoMayor(al100));
 		lemp.add(obtenerEmpleadoMayor(al110));
-		
-		
-		
-		
-		
 		transaction.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -279,11 +265,82 @@ public class EmployeesServices {
 				e_dev=e_f;
 			}
 		}
+		return e_dev;
+	}
+	
+	
+	
+	@SuppressWarnings("finally")
+	public ArrayList<Employees> obtenerEmpleadosMejorPagadosv20(){
+		Session session = null;
+		Transaction transaction = null;
+		ArrayList<Employees> le =new ArrayList<Employees>(11);
+		try{
+		System.out.println("obtenerEmpleadosMejorPagados");	
+		session = SessionManager.obtenerSession();
+		eDAO.setSession(session);
+		transaction = session.beginTransaction();
+		for (int i = 1; i <= 11; i++) {
+			le.add(obtenerEmpleadoMayor(eDAO.obtenerEmpleadosPorDepartamento(i*10)));	
+		}
+		transaction.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			transaction.rollback();
+		}finally{
+			SessionManager.disconectSession();
+			return le;
+		}
 		
+	}
+	
+	/**
+	 * v2.0 de obtener empleados mejor pagados por departamentos
+	 * @param le
+	 * @return
+	 */
+	public Employees obtenerEmpleadoMayor(List<Employees> le){
+		Employees e_dev= null;
+		Employees e_f = null;
+		Iterator<Employees> i = le.iterator();
+		e_dev=i.next();
+		
+		while(i.hasNext()){
+			e_f = i.next();
+			if(e_f.getSalary().intValue() > e_dev.getSalary().intValue()){
+				e_dev=e_f;
+			}
+		}
 		return e_dev;
 	}
 	
 	
 	
 	
+	
+	
+	
+	
+	//obtener empleados por departamento
+	//obtenerEmpleadosPorDepartamento(Object departamento)
+	
+	@SuppressWarnings("finally")
+	public List<Employees> obtenerEmpleadosPorDepartamento(int departament_id){
+		Session session = null;
+		Transaction transaction = null;
+		List<Employees> le =null;
+		try{
+		session = SessionManager.obtenerSession();
+		eDAO.setSession(session);
+		transaction = session.beginTransaction();
+		le = eDAO.obtenerEmpleadosPorDepartamento(departament_id);
+		transaction.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			transaction.rollback();
+		}finally{
+			SessionManager.disconectSession();
+			return le;
+		}	
+	}
 }
