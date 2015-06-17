@@ -10,12 +10,11 @@ import org.hibernate.cfg.Configuration;
 
 /**
  * @author Alberto Vivas
- *
+ * Clase encargada de todo lo referente a la session, desde que se abre hasta que se cierra.
  * 
  */
 public class SessionManager {
 
-	private Session session;
 	private static Configuration configuration;
 	private static StandardServiceRegistryBuilder builder;
 	private static SessionFactory factory;
@@ -30,19 +29,21 @@ public class SessionManager {
 	}
 	
 	public static Session obtenerSession(){
-		sessionManager.session =factory.openSession();
-		return sessionManager.session;
+		return factory.openSession();
 	}
 	
-	public static void disconectSession(){
-		sessionManager.session.close();
+	public static void disconectSession(Session session){
+		try{
+			session.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	
 	@SuppressWarnings("static-access")
-	public static void closeAll(){
+	public static void closeFactory(){
 		try{
-			//sessionManager.session.close();
 			sessionManager.factory.close();
 		}catch(Exception e){
 			e.printStackTrace();

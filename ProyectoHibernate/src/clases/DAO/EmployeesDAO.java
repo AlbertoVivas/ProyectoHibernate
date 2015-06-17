@@ -14,7 +14,7 @@ import interfaces.InterfaceDAO;
  *
  * 
  */
-public class EmployeesDAO extends SuperClaseDAO implements InterfaceDAO{
+public class EmployeesDAO extends SuperClaseDAO{
 	
 	
 
@@ -33,50 +33,5 @@ public class EmployeesDAO extends SuperClaseDAO implements InterfaceDAO{
 		return getSession().createSQLQuery("SELECT * FROM EMPLOYEES where DEPARTMENT_ID="+s).addEntity(Employees.class).list();
 	}
 
-	/* (non-Javadoc)
-	 * @see interfaces.InterfaceDAO#create(java.lang.Object)
-	 */
-	@SuppressWarnings("finally")
-	@Override
-	public boolean create(Object arg) {
-		boolean b_dev = false;
-		try{
-			getSession().saveOrUpdate((Employees)arg);
-			b_dev = true;
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-		return b_dev;
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @see interfaces.InterfaceDAO#Read(java.lang.Object)
-	 */
-	@Override
-	public Object Read(Object arg) {
-		int s = (Integer)arg;
-		@SuppressWarnings("unchecked")
-		List<Employees> le =getSession().createSQLQuery("Select * from employees where EMPLOYEE_ID ="+s).addEntity(Employees.class).list();
-		Iterator<Employees> ie = le.iterator();
-		return ie.next();
-	}
-
-	/* (non-Javadoc)
-	 * @see interfaces.InterfaceDAO#update(java.lang.Object)
-	 */
-	@Override
-	public Object update(Object arg) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/* (non-Javadoc)
-	 * @see interfaces.InterfaceDAO#delete(java.lang.Object)
-	 */
-	@Override
-	public boolean delete(Object arg) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 }

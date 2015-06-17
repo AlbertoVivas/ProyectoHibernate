@@ -12,13 +12,13 @@ public interface InterfaceDAO {
 
 	
 	//TODO CRUD
-	boolean create(Object arg);
+	Object create(Object objeto);
 	
-	Object Read(Object arg);
+	Object Read(Class clase,Object id);
 	
-	Object update(Object arg);
+	Object update(Object objeto);
 	
-	boolean delete(Object arg);
+	Object delete(Object objeto);
 
 	
 	

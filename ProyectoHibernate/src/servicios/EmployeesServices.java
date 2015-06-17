@@ -19,14 +19,17 @@ import clases.DAO.EmployeesDAO;
  *
  * 
  */
-public class EmployeesServices {
+public class EmployeesServices extends ServicesCRUD {
 	
 	private static EmployeesDAO eDAO;
-	//private static InterfaceDAO eDAO;
 	public EmployeesServices() {
 		eDAO = new EmployeesDAO();
 	}
-	
+	/**
+	 * metodo para incrementar el salario de todos los empleados
+	 * @param d tipo Big decimal (+,-,0)
+	 * @return T/F 
+	 */
 	@SuppressWarnings("finally")
 	public boolean incrementarSalario(BigDecimal d){
 		boolean b_dev= false;
@@ -62,11 +65,14 @@ public class EmployeesServices {
 			e.printStackTrace();
 			transaction.rollback();
 		}finally{
-			SessionManager.disconectSession();
+			SessionManager.disconectSession(session);
 			return b_dev;
 		}
 	}
-
+	/**
+	 * Imprime en consola todos los empleados
+	 * @return T/F , e imprime en consola los empleados.
+	 */
 	@SuppressWarnings("finally")
 	public boolean mostrarEmpleados(){
 		boolean b_dev= false;
@@ -88,51 +94,16 @@ public class EmployeesServices {
 			e.printStackTrace();
 			transaction.rollback();
 		}finally{
-			SessionManager.disconectSession();
+			SessionManager.disconectSession(session);
 			return b_dev;
 		}
 	}
+
 	
-	@SuppressWarnings("finally")
-	public boolean insertarempleado(Employees em){
-		boolean b_dev = false;
-		Session session = null;
-		Transaction transaction = null;
-		
-		try{
-		session = SessionManager.obtenerSession();
-		eDAO.setSession(session);
-		transaction = session.beginTransaction();
-		b_dev = eDAO.create(em);
-		} catch (Exception e) {
-			e.printStackTrace();
-			transaction.rollback();
-		}finally{
-			SessionManager.disconectSession();
-			return b_dev;
-		}
-	}
-	
-	@SuppressWarnings("finally")
-	public Employees obtenerempleado(int emp_id){
-		Employees b_dev = null;
-		Session session = null;
-		Transaction transaction = null;
-		
-		try{
-		session = SessionManager.obtenerSession();
-		eDAO.setSession(session);
-		transaction = session.beginTransaction();
-		b_dev = (Employees) eDAO.Read((Object)emp_id);
-		} catch (Exception e) {
-			e.printStackTrace();
-			transaction.rollback();
-		}finally{
-			SessionManager.disconectSession();
-			return b_dev;
-		}
-	}
-	
+	/**
+	 * Metodo para obtener la lista de los empleados	
+	 * @return List<Employees>
+	 */
 	@SuppressWarnings("finally")
 	public List<Employees> obtenerEmpleados(){
 		Session session = null;
@@ -148,111 +119,16 @@ public class EmployeesServices {
 			e.printStackTrace();
 			transaction.rollback();
 		}finally{
-			SessionManager.disconectSession();
+			SessionManager.disconectSession(session);
 			return le;
 		}
 	}
 	
-	@SuppressWarnings("finally")
-	public List<Employees> obtenerEmpleadosMejorPagados(){
-		Session session = null;
-		Transaction transaction = null;
-		List<Employees> le =null;
-		ArrayList<Employees> lemp =null;//new ArrayList<Employees>();
-		try{
-		System.out.println("obtenerEmpleadosMejorPagados");	
-		session = SessionManager.obtenerSession();
-		eDAO.setSession(session);
-		transaction = session.beginTransaction();
-		le = eDAO.obtenerEmpleados();
-		//Arrays.sort(lemp);
-		Iterator<Employees> ie = le.iterator();
-		lemp = new ArrayList<Employees>();
-		Employees e = null;
-		ArrayList<Employees> al10 = new ArrayList<Employees>();
-		ArrayList<Employees> al20 = new ArrayList<Employees>();
-		ArrayList<Employees> al30 = new ArrayList<Employees>();
-		ArrayList<Employees> al40 = new ArrayList<Employees>();
-		ArrayList<Employees> al50 = new ArrayList<Employees>();
-		ArrayList<Employees> al60 = new ArrayList<Employees>();
-		ArrayList<Employees> al70 = new ArrayList<Employees>();
-		ArrayList<Employees> al80 = new ArrayList<Employees>();
-		ArrayList<Employees> al90 = new ArrayList<Employees>();
-		ArrayList<Employees> al100 = new ArrayList<Employees>();
-		ArrayList<Employees> al110 = new ArrayList<Employees>();
-		ArrayList<Employees> alb = new ArrayList<Employees>();
-		
-		System.out.println("voy al while");
-		while(ie.hasNext()){
-			e = ie.next();
-			//System.out.println(e.imprime());
-			//System.out.println(e.getEmployeeId());
-				if (e.getEmployeeId()!= 178) {
-					int e_dep_id=e.getDepartments().getDepartmentId();
-					switch (e_dep_id) {
-					case 10:
-						al10.add(e);
-						break;
-					case 20:
-						al20.add(e);
-						break;
-					case 30:
-						al30.add(e);
-						break;
-					case 40:
-						al40.add(e);
-						break;
-					case 50:
-						al50.add(e);
-						break;
-					case 60:
-						al60.add(e);
-						break;
-					case 70:
-						al70.add(e);
-						break;
-					case 80:
-						al80.add(e);
-						break;
-					case 90:
-						al90.add(e);
-						break;
-					case 100:
-						al100.add(e);
-						break;
-					case 110:
-						al110.add(e);
-						break;
-
-					default:
-						alb.add(e);
-						break;
-					}
-				}
-		}
-		lemp.add(obtenerEmpleadoMayor(al10));
-		lemp.add(obtenerEmpleadoMayor(al20));
-		lemp.add(obtenerEmpleadoMayor(al30));
-		lemp.add(obtenerEmpleadoMayor(al40));
-		lemp.add(obtenerEmpleadoMayor(al50));
-		lemp.add(obtenerEmpleadoMayor(al60));
-		lemp.add(obtenerEmpleadoMayor(al70));
-		lemp.add(obtenerEmpleadoMayor(al80));
-		lemp.add(obtenerEmpleadoMayor(al90));
-		lemp.add(obtenerEmpleadoMayor(al100));
-		lemp.add(obtenerEmpleadoMayor(al110));
-		transaction.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			transaction.rollback();
-		}finally{
-			SessionManager.disconectSession();
-			return lemp;
-		}
-		
-	}
-	
-	
+	/**
+	 * Metodo que de un arraylist devuelve el empleado con mayor salario
+	 * @param ale
+	 * @return Employees
+	 */
 	public Employees obtenerEmpleadoMayor(ArrayList<Employees> ale){
 		Employees e_dev= null;
 		Employees e_f = null;
@@ -269,7 +145,10 @@ public class EmployeesServices {
 	}
 	
 	
-	
+	/**
+	 * Metodo que devuelve una lista de los empleados con el sueldo mas alto de cada departamento
+	 * @return List<Employees> 
+	 */
 	@SuppressWarnings("finally")
 	public ArrayList<Employees> obtenerEmpleadosMejorPagadosv20(){
 		Session session = null;
@@ -288,7 +167,7 @@ public class EmployeesServices {
 			e.printStackTrace();
 			transaction.rollback();
 		}finally{
-			SessionManager.disconectSession();
+			SessionManager.disconectSession(session);
 			return le;
 		}
 		
@@ -297,7 +176,7 @@ public class EmployeesServices {
 	/**
 	 * v2.0 de obtener empleados mejor pagados por departamentos
 	 * @param le
-	 * @return
+	 * @return Employees
 	 */
 	public Employees obtenerEmpleadoMayor(List<Employees> le){
 		Employees e_dev= null;
@@ -315,15 +194,11 @@ public class EmployeesServices {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	//obtener empleados por departamento
-	//obtenerEmpleadosPorDepartamento(Object departamento)
-	
+	/**
+	 * Metodo que devuelve una lista de los empleados por el identificador
+	 * @param departament_id
+	 * @return List<Employees>
+	 */
 	@SuppressWarnings("finally")
 	public List<Employees> obtenerEmpleadosPorDepartamento(int departament_id){
 		Session session = null;
@@ -339,7 +214,7 @@ public class EmployeesServices {
 			e.printStackTrace();
 			transaction.rollback();
 		}finally{
-			SessionManager.disconectSession();
+			SessionManager.disconectSession(session);
 			return le;
 		}	
 	}
