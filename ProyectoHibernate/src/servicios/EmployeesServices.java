@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 import org.hibernate.Transaction;
 import org.hibernate.Session;
 import session.SessionManager;
@@ -20,7 +22,7 @@ import clases.DAO.EmployeesDAO;
  * 
  */
 public class EmployeesServices extends ServicesCRUD {
-	
+	private final static Logger log = Logger.getLogger("mylog");
 	private static EmployeesDAO eDAO;
 	public EmployeesServices() {
 		eDAO = new EmployeesDAO();
@@ -62,6 +64,7 @@ public class EmployeesServices extends ServicesCRUD {
 		transaction.commit();
 		b_dev = true;
 		} catch (Exception e) {
+			log.error("Error al Incrementar el salario de los empleados");
 			e.printStackTrace();
 			transaction.rollback();
 		}finally{
@@ -91,6 +94,7 @@ public class EmployeesServices extends ServicesCRUD {
 		transaction.commit();
 		b_dev = true;
 		} catch (Exception e) {
+			log.error("Error al mostrar los empleados por consola");
 			e.printStackTrace();
 			transaction.rollback();
 		}finally{
@@ -116,10 +120,11 @@ public class EmployeesServices extends ServicesCRUD {
 		le = eDAO.obtenerEmpleados();
 		transaction.commit();
 		} catch (Exception e) {
+			log.error("Error al recuperar los empleados e introducirlos en una lista");
 			e.printStackTrace();
 			transaction.rollback();
 		}finally{
-			SessionManager.disconectSession(session);
+			SessionManager.disconectSession(eDAO.getSession());
 			return le;
 		}
 	}
@@ -150,7 +155,7 @@ public class EmployeesServices extends ServicesCRUD {
 	 * @return List<Employees> 
 	 */
 	@SuppressWarnings("finally")
-	public ArrayList<Employees> obtenerEmpleadosMejorPagadosv20(){
+	public ArrayList<Employees> obtenerEmpleadosMejorPagados(){
 		Session session = null;
 		Transaction transaction = null;
 		ArrayList<Employees> le =new ArrayList<Employees>(11);
@@ -164,10 +169,11 @@ public class EmployeesServices extends ServicesCRUD {
 		}
 		transaction.commit();
 		} catch (Exception e) {
+			log.error("Error al obtener los empleados mejor pagados");
 			e.printStackTrace();
 			transaction.rollback();
 		}finally{
-			SessionManager.disconectSession(session);
+			SessionManager.disconectSession(eDAO.getSession());
 			return le;
 		}
 		
@@ -211,10 +217,11 @@ public class EmployeesServices extends ServicesCRUD {
 		le = eDAO.obtenerEmpleadosPorDepartamento(departament_id);
 		transaction.commit();
 		} catch (Exception e) {
+			log.error("Error al recuperar una lista de empleados por departamento:"+departament_id);
 			e.printStackTrace();
 			transaction.rollback();
 		}finally{
-			SessionManager.disconectSession(session);
+			SessionManager.disconectSession(eDAO.getSession());
 			return le;
 		}	
 	}

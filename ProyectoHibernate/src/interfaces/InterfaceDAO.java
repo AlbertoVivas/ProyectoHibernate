@@ -4,9 +4,9 @@
 package interfaces;
 
 /**
- * @author Alberto Vivas
- *
+ * Interfaz comun para todos los objetos DAO, con todos los crud comunes.
  * 
+ * @author Alberto Vivas
  */
 public interface InterfaceDAO {
 

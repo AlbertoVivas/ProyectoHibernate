@@ -5,6 +5,7 @@ package servicios;
 
 import java.io.Serializable;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -18,8 +19,8 @@ import interfaces.InterfaceDAO;
  * 
  */
 public class ServicesCRUD implements InterfaceDAO {
+	private final static Logger log = Logger.getLogger("mylog");
 	private SuperClaseDAO objetoDAO;
-	
 	public ServicesCRUD(){
 		objetoDAO= new SuperClaseDAO();
 	}
@@ -37,11 +38,12 @@ public class ServicesCRUD implements InterfaceDAO {
 			objetoDAO.getSession().save(object);
 			trans.commit();
 			}catch(Exception e){
+				log.error("Error al crear un objeto de la clase:"+object.getClass());
 				e.printStackTrace();
 				trans.rollback();
 			}finally{
 				SessionManager.disconectSession(objetoDAO.getSession());
-				SessionManager.closeFactory();
+				//SessionManager.closeFactory();
 			}
 			return object;
 	}
@@ -60,11 +62,12 @@ public class ServicesCRUD implements InterfaceDAO {
 		object = objetoDAO.getSession().get(clase,(Serializable) id);
 		trans.commit();
 		}catch(Exception e){
+			log.error("Error al leer un objeto de la clase:"+clase.getCanonicalName()+" y object: "+object.getClass());
 			e.printStackTrace();
 			trans.rollback();
 		}finally{
 			SessionManager.disconectSession(objetoDAO.getSession());
-			SessionManager.closeFactory();
+			//SessionManager.closeFactory();
 		}
 		return object;
 	}
@@ -83,11 +86,12 @@ public class ServicesCRUD implements InterfaceDAO {
 		objetoDAO.getSession().save(object);
 		trans.commit();
 		}catch(Exception e){
+			log.error("Error al modificar un objeto de la clase:"+object.getClass());
 			e.printStackTrace();
 			trans.rollback();
 		}finally{
 			SessionManager.disconectSession(objetoDAO.getSession());
-			SessionManager.closeFactory();
+			//SessionManager.closeFactory();
 		}
 		return object;
 	}
@@ -105,11 +109,12 @@ public class ServicesCRUD implements InterfaceDAO {
 		objetoDAO.getSession().delete(object);
 		trans.commit();
 		}catch(Exception e){
+			log.error("Error al borrar un objeto de la clase:"+object.getClass());
 			e.printStackTrace();
 			trans.rollback();
 		}finally{
 			SessionManager.disconectSession(objetoDAO.getSession());
-			SessionManager.closeFactory();
+			//SessionManager.closeFactory();
 		}
 		return object;
 	}

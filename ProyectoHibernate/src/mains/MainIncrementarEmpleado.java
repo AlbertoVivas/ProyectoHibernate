@@ -9,10 +9,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import servicios.EmployeesServices;
-import servicios.JobsServices;
 import session.SessionManager;
 import tablas_Clases.Employees;
-import tablas_Clases.Jobs;
+
 
 
 /**
@@ -26,7 +25,6 @@ public class MainIncrementarEmpleado {
 	public static void main(String[] args) {
 		EmployeesServices es = new EmployeesServices();
 		BigDecimal d = new BigDecimal(20);
-		//es.incrementarSalario(d);
 		try{
 		//es.mostrarEmpleados();
 		//es.incrementarSalario(d);
@@ -65,7 +63,7 @@ public class MainIncrementarEmpleado {
 		}
 		*/
 			
-		ArrayList<Employees> ale1 = es.obtenerEmpleadosMejorPagadosv20();
+		ArrayList<Employees> ale1 = es.obtenerEmpleadosMejorPagados();
 		Iterator<Employees> i1 = ale1.iterator();
 		System.out.println("\n Lista de empleados mejor pagados\n");
 		while(i1.hasNext()){
@@ -81,14 +79,12 @@ public class MainIncrementarEmpleado {
 			while (i.hasNext()) {
 				System.out.println(i.next().imprime());
 			}
-			
-			
-			
+		
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}finally{
-			SessionManager.closeAll();
+			SessionManager.closeFactory();
 		}
 	}
 }
